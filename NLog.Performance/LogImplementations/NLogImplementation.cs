@@ -11,13 +11,21 @@ namespace NLog.Performance.LogImplementations
 
         public string Name { get { return "NLog"; } }
 
-        private static FileTarget CreateFileTarget(string fileName) 
+        private static FileTarget CreateFileTarget(string fileName, bool exclusive = false) 
         {
             var fileTarget = new FileTarget
                 {
                     FileName = Layout.FromString(fileName),
                     Layout = Layout.FromString("${message}")
                 };
+
+            if (exclusive)
+            {
+                fileTarget.KeepFileOpen = true;
+                fileTarget.ConcurrentWrites = false;
+                fileTarget.NetworkWrites = false;
+            }
+
             return fileTarget;
         }
 
@@ -27,9 +35,9 @@ namespace NLog.Performance.LogImplementations
             LogManager.ReconfigExistingLoggers();
         }
 
-        public void AddFileTarget(string fileName)
+        public void AddFileTarget(string fileName, bool exclusive)
         {
-            var fileTarget = CreateFileTarget(fileName);
+            var fileTarget = CreateFileTarget(fileName, exclusive);
             SetupLoggingWithTarget(fileTarget);
         }
 

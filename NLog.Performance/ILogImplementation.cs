@@ -8,7 +8,7 @@
 
         void ClearTargets();
 
-        void AddFileTarget(string fileName);
+        void AddFileTarget(string fileName, bool exclusive);
 
         void AddBufferredFileTarget(string fileName, int bufferSize);
 

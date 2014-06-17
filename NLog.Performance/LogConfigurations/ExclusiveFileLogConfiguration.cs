@@ -2,11 +2,11 @@
 
 namespace NLog.Performance
 {
-    class SimpleFileLogConfiguration : ILogConfiguration 
+    class ExclusiveFileLogConfiguration : ILogConfiguration
     {
         public string Name
         {
-            get { return "Simple File Log"; }
+            get { return "Exclusive File Log"; }
         }
 
         public void Apply(ILogImplementation implementation)
@@ -17,7 +17,7 @@ namespace NLog.Performance
             }
 
             implementation.ClearTargets();
-            implementation.AddFileTarget("log.txt", exclusive: false);
+            implementation.AddFileTarget("log.txt", exclusive: true);
         }
     }
 }

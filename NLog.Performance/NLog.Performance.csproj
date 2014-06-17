@@ -53,6 +53,7 @@
     <Compile Include="IScenario.cs" />
     <Compile Include="LogConfigurations\AsyncBufferredFileLogConfiguration.cs" />
     <Compile Include="LogConfigurations\BufferredFileLogConfiguration.cs" />
+    <Compile Include="LogConfigurations\ExclusiveFileLogConfiguration.cs" />
     <Compile Include="PerformanceMonitor\IPerformanceCollector.cs" />
     <Compile Include="PerformanceMonitor\IPerformanceMonitor.cs" />
     <Compile Include="PerformanceMonitor\PerformanceCollectorBase.cs" />

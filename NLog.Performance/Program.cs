@@ -78,6 +78,7 @@ namespace NLog.Performance
         static IEnumerable<ILogConfiguration> CreateLogConfigurations()
         {
             yield return new SimpleFileLogConfiguration();
+            yield return new ExclusiveFileLogConfiguration();
             yield return new BufferredFileLogConfiguration();
             yield return new AsyncBufferredFileLogConfiguration();
         }
