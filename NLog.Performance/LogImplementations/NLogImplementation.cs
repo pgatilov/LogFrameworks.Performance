@@ -36,7 +36,7 @@ namespace NLog.Performance.LogImplementations
         public void AddBufferredFileTarget(string fileName, int bufferSize)
         {
             var fileTarget = CreateFileTarget(fileName);
-            var bufferredTarget = new BufferingTargetWrapper(fileTarget, bufferSize, 100);
+            var bufferredTarget = new BufferingTargetWrapper(fileTarget, bufferSize, 50);
             SetupLoggingWithTarget(bufferredTarget);
         }
 
