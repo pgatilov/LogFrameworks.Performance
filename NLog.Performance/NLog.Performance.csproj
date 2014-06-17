@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,6 +47,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILoadProfile.cs" />
+    <Compile Include="ILogConfiguration.cs" />
+    <Compile Include="ILogImplementation.cs" />
+    <Compile Include="IScenario.cs" />
+    <Compile Include="LogConfigurations\AsyncBufferredFileLogConfiguration.cs" />
+    <Compile Include="LogConfigurations\BufferredFileLogConfiguration.cs" />
+    <Compile Include="PerformanceMonitor\IPerformanceCollector.cs" />
+    <Compile Include="PerformanceMonitor\IPerformanceMonitor.cs" />
+    <Compile Include="PerformanceMonitor\PerformanceCollectorBase.cs" />
+    <Compile Include="PerformanceMonitor\PerformanceCollectorsFactory.cs" />
+    <Compile Include="PerformanceMonitor\PerformanceMetric.cs" />
+    <Compile Include="PerformanceMonitor\PerformanceMonitor.cs" />
+    <Compile Include="PerformanceMonitor\PerformanceStatistics.cs" />
+    <Compile Include="PerformanceMonitor\TotalTimeElapsedCollector.cs" />
+    <Compile Include="Scenarios\LargeMessageScenario.cs" />
+    <Compile Include="LoadProfiles\ConstantLoadProfile.cs" />
+    <Compile Include="LogImplementations\NLogImplementation.cs" />
+    <Compile Include="LogConfigurations\SimpleFileLogConfiguration.cs" />
+    <Compile Include="TestCase.cs" />
+    <Compile Include="Threading\ParallelThreadsTaskScheduler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +74,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
