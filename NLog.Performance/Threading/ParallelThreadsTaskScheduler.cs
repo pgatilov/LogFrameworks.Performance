@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NLog.Performance.Threading
 {
-    public class ParallelThreadsTaskScheduler : TaskScheduler
+    public class ParallelThreadsTaskScheduler : TaskScheduler, IDisposable
     {
         readonly int _threadCount;
         readonly ConcurrentQueue<Task> _tasks = new ConcurrentQueue<Task>();
@@ -26,6 +26,14 @@ namespace NLog.Performance.Threading
             get
             {
                 return _threadCount;
+            }
+        }
+
+        public void Dispose()
+        {
+            foreach (var workerThread in _workerThreads)
+            {
+                workerThread.Stop();
             }
         }
 
@@ -65,6 +73,7 @@ namespace NLog.Performance.Threading
 
             AutoResetEvent _workerLoopSleepAlarm;
             volatile bool _isSleeping;
+            private volatile bool _stopRequested;
 
             public WorkerThread(ParallelThreadsTaskScheduler scheduler) 
             {
@@ -81,6 +90,11 @@ namespace NLog.Performance.Threading
                 {
                     while (true)
                     {
+                        if (_stopRequested)
+                        {
+                            return;
+                        }
+
                         Task task;
                         var haveWork = _scheduler._tasks.TryDequeue(out task);
                         if (!haveWork)
@@ -99,6 +113,11 @@ namespace NLog.Performance.Threading
 
             public bool TryWake() 
             {
+                if (_stopRequested)
+                {
+                    throw new InvalidOperationException("Cannot wake stopped thread.");
+                }
+
                 if (_thread.ThreadState.HasFlag(ThreadState.Unstarted)) 
                 {
                     _thread.Start();
@@ -112,6 +131,23 @@ namespace NLog.Performance.Threading
 
                 _workerLoopSleepAlarm.Set();
                 return true;
+            }
+
+            public void Stop()
+            {
+                _stopRequested = true;
+
+                if (_thread.ThreadState.HasFlag(ThreadState.Unstarted))
+                {
+                    return;
+                }
+
+                if (!_isSleeping)
+                {
+                    return;
+                }
+
+                _workerLoopSleepAlarm.Set();
             }
         }
     }
