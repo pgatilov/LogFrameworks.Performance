@@ -11,7 +11,7 @@ namespace NLog.Performance.LogImplementations
 
         public string Name { get { return "NLog"; } }
 
-        private static FileTarget CreateFileTarget(string fileName, bool exclusive = false) 
+        private static FileTarget CreateFileTarget(string fileName, bool keepOpen = false, bool allowLocalWrite = true) 
         {
             var fileTarget = new FileTarget
                 {
@@ -19,11 +19,12 @@ namespace NLog.Performance.LogImplementations
                     Layout = Layout.FromString("${message}")
                 };
 
-            if (exclusive)
+            if (keepOpen)
             {
                 fileTarget.KeepFileOpen = true;
-                fileTarget.ConcurrentWrites = false;
+
                 fileTarget.NetworkWrites = false;
+                fileTarget.ConcurrentWrites = allowLocalWrite;
             }
 
             return fileTarget;
@@ -35,22 +36,22 @@ namespace NLog.Performance.LogImplementations
             LogManager.ReconfigExistingLoggers();
         }
 
-        public void AddFileTarget(string fileName, bool exclusive)
+        public void AddFileTarget(string fileName, bool keepOpen, bool allowLocalWrite)
         {
-            var fileTarget = CreateFileTarget(fileName, exclusive);
+            var fileTarget = CreateFileTarget(fileName, keepOpen, allowLocalWrite);
             SetupLoggingWithTarget(fileTarget);
         }
 
-        public void AddBufferredFileTarget(string fileName, int bufferSize)
+        public void AddBufferredFileTarget(string fileName, int bufferSize, bool exclusive)
         {
-            var fileTarget = CreateFileTarget(fileName);
+            var fileTarget = CreateFileTarget(fileName, keepOpen: exclusive, allowLocalWrite: !exclusive);
             var bufferredTarget = new BufferingTargetWrapper(fileTarget, bufferSize, 50);
             SetupLoggingWithTarget(bufferredTarget);
         }
 
-        public void AddAsyncBufferredFileTarget(string fileName, int bufferSize)
+        public void AddAsyncBufferredFileTarget(string fileName, int bufferSize, bool exclusive)
         {
-            var fileTarget = CreateFileTarget(fileName);
+            var fileTarget = CreateFileTarget(fileName, keepOpen: exclusive, allowLocalWrite: !exclusive);
             var bufferredTarget = new AsyncTargetWrapper(fileTarget, bufferSize, AsyncTargetWrapperOverflowAction.Block);
             SetupLoggingWithTarget(bufferredTarget);
         }

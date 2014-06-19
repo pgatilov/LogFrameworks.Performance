@@ -2,11 +2,11 @@
 
 namespace NLog.Performance
 {
-    class BufferredFileLogConfiguration : ILogConfiguration
+    class KeepOpenLocalWriteAllowedFileLogConfiguration : ILogConfiguration
     {
         public string Name
         {
-            get { return "Bufferred File Log"; }
+            get { return "File Log (Keeps Open, Allows Local Writes)"; }
         }
 
         public void Apply(ILogImplementation implementation)
@@ -17,7 +17,7 @@ namespace NLog.Performance
             }
 
             implementation.ClearTargets();
-            implementation.AddBufferredFileTarget("log.txt", 1000, exclusive: false);
+            implementation.AddFileTarget("log.txt", keepOpen: true, allowLocalWrite: true);
         }
     }
 }

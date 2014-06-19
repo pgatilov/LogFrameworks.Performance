@@ -23,7 +23,7 @@ namespace NLog.Performance
                                 configuration.Name,
                                 implementation.Name,
                                 loadProfile.Name);
-                            Console.ReadLine();
+                            //Console.ReadLine();
 
                             var testCase = new TestCase
                             {
@@ -34,6 +34,9 @@ namespace NLog.Performance
                             };
 
                             RunTest(testCase);
+
+                            Console.WriteLine("----------");
+                            Console.WriteLine();
                         }
                     }
                 }
@@ -59,6 +62,7 @@ namespace NLog.Performance
                 performanceMonitor.Stop();
 
                 Console.WriteLine("Test done");
+                Console.WriteLine();
 
                 Console.WriteLine("Performance report:");
                 Console.WriteLine(performanceMonitor.GetPerformanceStatistics());
@@ -79,8 +83,11 @@ namespace NLog.Performance
         {
             yield return new SimpleFileLogConfiguration();
             yield return new ExclusiveFileLogConfiguration();
+            yield return new KeepOpenLocalWriteAllowedFileLogConfiguration();
             yield return new BufferredFileLogConfiguration();
+            yield return new BufferredExclusiveFileLogConfiguration();
             yield return new AsyncBufferredFileLogConfiguration();
+            yield return new AsyncBufferredExclusiveFileLogConfiguration();
         }
 
         static IEnumerable<ILogImplementation> CreateLogImplementations() 

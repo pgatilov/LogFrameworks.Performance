@@ -17,7 +17,7 @@ namespace NLog.Performance
             }
 
             implementation.ClearTargets();
-            implementation.AddAsyncBufferredFileTarget("log.txt", 1000);
+            implementation.AddAsyncBufferredFileTarget("log.txt", 1000, exclusive: false);
         }
     }
 }

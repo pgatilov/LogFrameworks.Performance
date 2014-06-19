@@ -17,7 +17,7 @@ namespace NLog.Performance
             }
 
             implementation.ClearTargets();
-            implementation.AddFileTarget("log.txt", exclusive: true);
+            implementation.AddFileTarget("log.txt", keepOpen: true, allowLocalWrite: false);
         }
     }
 }

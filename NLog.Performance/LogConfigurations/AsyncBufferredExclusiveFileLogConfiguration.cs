@@ -2,11 +2,11 @@
 
 namespace NLog.Performance
 {
-    class BufferredFileLogConfiguration : ILogConfiguration
+    class AsyncBufferredExclusiveFileLogConfiguration : ILogConfiguration
     {
         public string Name
         {
-            get { return "Bufferred File Log"; }
+            get { return "Async Bufferred Exclusive File Log"; }
         }
 
         public void Apply(ILogImplementation implementation)
@@ -17,7 +17,7 @@ namespace NLog.Performance
             }
 
             implementation.ClearTargets();
-            implementation.AddBufferredFileTarget("log.txt", 1000, exclusive: false);
+            implementation.AddAsyncBufferredFileTarget("log.txt", 1000, exclusive: true);
         }
     }
 }

@@ -8,10 +8,10 @@
 
         void ClearTargets();
 
-        void AddFileTarget(string fileName, bool exclusive);
+        void AddFileTarget(string fileName, bool keepOpen, bool allowLocalWrite);
 
-        void AddBufferredFileTarget(string fileName, int bufferSize);
+        void AddBufferredFileTarget(string fileName, int bufferSize, bool exclusive);
 
-        void AddAsyncBufferredFileTarget(string fileName, int bufferSize);
+        void AddAsyncBufferredFileTarget(string fileName, int bufferSize, bool exclusive);
     }
 }
