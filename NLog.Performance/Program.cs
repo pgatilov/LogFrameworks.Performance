@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using NLog.Performance.LoadProfiles;
 using NLog.Performance.LogImplementations;
 using NLog.Performance.PerformanceMonitor;
@@ -37,6 +38,8 @@ namespace NLog.Performance
 
                             Console.WriteLine("----------");
                             Console.WriteLine();
+
+                            Thread.Sleep(TimeSpan.FromSeconds(5));
                         }
                     }
                 }
@@ -98,6 +101,7 @@ namespace NLog.Performance
         static IEnumerable<ILoadProfile> CreateLoadProfiles() 
         {
             yield return new ConstantLoadProfile(25);
+            yield return new ConstantLoadProfile(100);
         }
     }
 }
