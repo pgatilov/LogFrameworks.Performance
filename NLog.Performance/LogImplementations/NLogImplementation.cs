@@ -69,7 +69,9 @@ namespace NLog.Performance.LogImplementations
 
         public void WriteMessage(string message) 
         {
-            _logger.Info(message);
+            _logger.Info(message, (object[])null);
+            // NLog bug! Do not do it this way for strings! It will pass it into string.Format("{0}", yourStringHere) which is a waste of resources (-15% log write performance!)
+            //_logger.Info(message);
         }
     }
 }
