@@ -17,7 +17,7 @@ namespace NLog.Performance
             }
 
             implementation.ClearTargets();
-            implementation.AddAsyncBufferredFileGroupTarget(new[] { "C:\\Temp\\log.txt", "C:\\Temp\\log2.txt", "C:\\Temp\\log3.txt" }, 1000, exclusive: true);
+            implementation.AddAsyncBufferredFileGroupTarget(new[] { "log.txt", "log2.txt", "log3.txt" }, 1000, exclusive: true);
         }
     }
 }
