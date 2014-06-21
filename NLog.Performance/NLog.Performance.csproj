@@ -58,6 +58,7 @@
     <Compile Include="LogConfigurations\BufferredFileLogConfiguration.cs" />
     <Compile Include="LogConfigurations\ExclusiveFileLogConfiguration.cs" />
     <Compile Include="LogConfigurations\KeepOpenLocalWriteAllowedFileLogConfiguration.cs" />
+    <Compile Include="LogConfigurations\MultifileAsyncBufferredExclusiveFileLogConfiguration.cs" />
     <Compile Include="PerformanceMonitor\IPerformanceCollector.cs" />
     <Compile Include="PerformanceMonitor\IPerformanceMonitor.cs" />
     <Compile Include="PerformanceMonitor\PerformanceCollectorBase.cs" />

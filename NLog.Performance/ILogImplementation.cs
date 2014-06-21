@@ -13,5 +13,7 @@
         void AddBufferredFileTarget(string fileName, int bufferSize, bool exclusive);
 
         void AddAsyncBufferredFileTarget(string fileName, int bufferSize, bool exclusive);
+
+        void AddAsyncBufferredFileGroupTarget(string[] fileNames, int bufferSize, bool exclusive);
     }
 }

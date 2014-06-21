@@ -1,4 +1,5 @@
-﻿using NLog.Config;
+﻿using System.Linq;
+using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
 using NLog.Targets.Wrappers;
@@ -54,6 +55,14 @@ namespace NLog.Performance.LogImplementations
             var fileTarget = CreateFileTarget(fileName, keepOpen: exclusive, allowLocalWrite: !exclusive);
             var bufferredTarget = new AsyncTargetWrapper(fileTarget, bufferSize, AsyncTargetWrapperOverflowAction.Block);
             SetupLoggingWithTarget(bufferredTarget);
+        }
+
+        public void AddAsyncBufferredFileGroupTarget(string[] fileNames, int bufferSize, bool exclusive)
+        {
+            var fileTargets = fileNames.Select(x => CreateFileTarget(x, keepOpen: exclusive, allowLocalWrite: !exclusive));
+            var bufferredTargets = fileTargets.Select(x => new AsyncTargetWrapper(x, bufferSize, AsyncTargetWrapperOverflowAction.Block));
+            var targetGroup = new RoundRobinGroupTarget(bufferredTargets.Cast<Target>().ToArray());
+            SetupLoggingWithTarget(targetGroup);
         }
 
         private void SetupLoggingWithTarget(Target target)

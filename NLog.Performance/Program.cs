@@ -60,7 +60,7 @@ namespace NLog.Performance
                 testCase.Scenario.Run(testCase.Logger);
 
                 performanceMonitor.Start();
-                const int TimesToRun = 10000;
+                const int TimesToRun = 20000;
                 testCase.LoadProfile.Run(() => testCase.Scenario.Run(testCase.Logger), TimesToRun);
                 performanceMonitor.Stop();
 
@@ -91,6 +91,7 @@ namespace NLog.Performance
             yield return new BufferredExclusiveFileLogConfiguration();
             yield return new AsyncBufferredFileLogConfiguration();
             yield return new AsyncBufferredExclusiveFileLogConfiguration();
+            yield return new MultifileAsyncBufferredExclusiveFileLogConfiguration();
         }
 
         static IEnumerable<ILogImplementation> CreateLogImplementations() 
